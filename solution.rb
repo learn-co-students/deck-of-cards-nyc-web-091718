@@ -1,17 +1,19 @@
 require 'pry'
 
 class Deck
-  attr_reader :the_deck
+  attr_reader :the_deck, :cards
 
   def initialize
     @the_deck = []
+    @cards = @the_deck
+    make_deck
   end
 
   def make_deck
     4.times do |s|
       13.times do |r|
-        @the_deck << Card.new(r,s)
-        puts "#{r} | #{s}"
+        @the_deck << Card.new(s,r)
+        #puts "#{r} | #{s}"
       end
     end
   end
@@ -45,11 +47,17 @@ class Card
   # ranks = ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
   # suits = ['Hearts','Clubs','Diamonds','Spades']
 
-  def initialize(rankID, suitID)
+  def initialize(suitID, rankID)
     #binding.pry
-    @rank = ranks(rankID)
-    @suit = suits(suitID)
-    @drawn = false
+    if rankID.class != Fixnum && suitID != Fixnum
+      #binding.pry
+      @rank = rankID
+      @suit = suitID
+    else
+      @rank = ranks(rankID)
+      @suit = suits(suitID)
+      @drawn = false
+    end
   end
 
   def ranks(n)
@@ -66,9 +74,9 @@ end
 ####################
 # Test Code
 
-d = Deck.new
-d.make_deck
-
-binding.pry
-
-puts 0
+# d = Deck.new
+# d.make_deck
+#
+# binding.pry
+#
+# puts 0
